@@ -1,0 +1,593 @@
+2025-12-27T00:14:47.401+05:30 ERROR 15128 --- [LegalLens] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'logging.level.pattern.console' to org.springframework.boot.logging.LogLevel:
+
+    Property: logging.level.pattern.console
+    Value: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n"
+    Origin: class path resource [application.yaml] from LegalLens-0.0.1-SNAPSHOT.jar - 39:16
+    Reason: failed to convert java.lang.String to org.springframework.boot.logging.LogLevel (caused by java.lang.IllegalArgumentException: No enum constant org.springframework.boot.logging.LogLevel.%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n)
+
+Action:
+
+Update your application's configuration. The following values are valid:
+
+    DEBUG
+    ERROR
+    FATAL
+    INFO
+    OFF
+    TRACE
+    WARN
+
+2025-12-27T00:16:00.063+05:30  INFO 1364 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 1364 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:16:00.067+05:30 DEBUG 1364 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:16:00.068+05:30  INFO 1364 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:16:00.956+05:30  INFO 1364 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:16:00.982+05:30  INFO 1364 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:16:01.797+05:30  INFO 1364 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:16:01.821+05:30  INFO 1364 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:16:01.822+05:30  INFO 1364 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:16:01.954+05:30  INFO 1364 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:16:01.955+05:30  INFO 1364 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1826 ms
+2025-12-27T00:16:02.237+05:30  WARN 1364 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2025-12-27T00:16:02.246+05:30  INFO 1364 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:16:02.297+05:30  INFO 1364 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:16:02.340+05:30 ERROR 1364 --- [LegalLens] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-12-27T00:17:16.690+05:30  INFO 15004 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 15004 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:17:16.693+05:30 DEBUG 15004 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:17:16.695+05:30  INFO 15004 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:17:17.589+05:30  INFO 15004 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:17:17.612+05:30  INFO 15004 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:17:18.237+05:30  INFO 15004 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:17:18.253+05:30  INFO 15004 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:17:18.254+05:30  INFO 15004 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:17:18.339+05:30  INFO 15004 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:17:18.340+05:30  INFO 15004 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1588 ms
+2025-12-27T00:17:18.609+05:30  INFO 15004 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:17:18.668+05:30  INFO 15004 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:17:18.720+05:30  INFO 15004 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:17:19.022+05:30  INFO 15004 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:17:19.056+05:30  INFO 15004 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:17:20.437+05:30  INFO 15004 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5aac6f9f
+2025-12-27T00:17:20.440+05:30  INFO 15004 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:17:20.493+05:30  WARN 15004 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:17:20.515+05:30  INFO 15004 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:17:20.890+05:30  INFO 15004 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:17:20.895+05:30  INFO 15004 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:17:21.014+05:30  WARN 15004 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:17:21.351+05:30  WARN 15004 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+2025-12-27T00:17:21.352+05:30  INFO 15004 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:17:21.355+05:30  INFO 15004 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:17:21.359+05:30  INFO 15004 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:17:21.364+05:30  INFO 15004 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:17:21.381+05:30  INFO 15004 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:17:21.396+05:30 ERROR 15004 --- [LegalLens] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.9.jar:3.5.9]
+	at com.contractGuard.LegalLens.LegalLensApplication.main(LegalLensApplication.java:13) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 21 common frames omitted
+Caused by: java.lang.IllegalArgumentException: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.15.jar:6.2.15]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAIAutoConfigurationUtil.resolveConnectionProperties(OpenAIAutoConfigurationUtil.java:58) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration.openAiAudioSpeechModel(OpenAiAudioSpeechAutoConfiguration.java:66) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 24 common frames omitted
+
+2025-12-27T00:19:34.335+05:30  INFO 22328 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 22328 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:19:34.341+05:30 DEBUG 22328 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:19:34.343+05:30  INFO 22328 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:19:35.775+05:30  INFO 22328 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:19:35.805+05:30  INFO 22328 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:19:36.834+05:30  INFO 22328 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:19:36.867+05:30  INFO 22328 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:19:36.867+05:30  INFO 22328 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:19:37.049+05:30  INFO 22328 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:19:37.051+05:30  INFO 22328 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2593 ms
+2025-12-27T00:19:38.031+05:30  INFO 22328 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:19:38.673+05:30  INFO 22328 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:19:39.124+05:30  INFO 22328 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:19:41.610+05:30  INFO 22328 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:19:41.907+05:30  INFO 22328 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:19:43.722+05:30  INFO 22328 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1dbeedff
+2025-12-27T00:19:43.738+05:30  INFO 22328 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:19:44.124+05:30  WARN 22328 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:19:44.346+05:30  INFO 22328 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:19:47.866+05:30  INFO 22328 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:19:47.922+05:30  INFO 22328 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:19:48.977+05:30  WARN 22328 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:19:51.610+05:30  WARN 22328 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+2025-12-27T00:19:51.619+05:30  INFO 22328 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:19:51.643+05:30  INFO 22328 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:19:51.684+05:30  INFO 22328 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:19:51.717+05:30  INFO 22328 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:19:51.867+05:30  INFO 22328 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:19:52.098+05:30 ERROR 22328 --- [LegalLens] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.9.jar:3.5.9]
+	at com.contractGuard.LegalLens.LegalLensApplication.main(LegalLensApplication.java:13) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 21 common frames omitted
+Caused by: java.lang.IllegalArgumentException: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.15.jar:6.2.15]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAIAutoConfigurationUtil.resolveConnectionProperties(OpenAIAutoConfigurationUtil.java:58) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration.openAiAudioSpeechModel(OpenAiAudioSpeechAutoConfiguration.java:66) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 24 common frames omitted
+
+2025-12-27T00:25:43.805+05:30  INFO 20356 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 20356 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:25:43.809+05:30 DEBUG 20356 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:25:43.810+05:30  INFO 20356 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:25:44.863+05:30  INFO 20356 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:25:44.888+05:30  INFO 20356 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:25:45.571+05:30  INFO 20356 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:25:45.587+05:30  INFO 20356 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:25:45.588+05:30  INFO 20356 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:25:45.701+05:30  INFO 20356 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:25:45.702+05:30  INFO 20356 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1828 ms
+2025-12-27T00:25:46.111+05:30  INFO 20356 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:25:46.248+05:30  INFO 20356 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:25:46.369+05:30  INFO 20356 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:25:47.213+05:30  INFO 20356 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:25:47.314+05:30  INFO 20356 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:25:47.999+05:30  INFO 20356 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@29f8134
+2025-12-27T00:25:48.010+05:30  INFO 20356 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:25:48.297+05:30  WARN 20356 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:25:48.480+05:30  INFO 20356 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:25:51.148+05:30  INFO 20356 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:25:51.182+05:30  INFO 20356 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:25:52.036+05:30  WARN 20356 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:25:54.034+05:30  WARN 20356 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+2025-12-27T00:25:54.039+05:30  INFO 20356 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:25:54.060+05:30  INFO 20356 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:25:54.083+05:30  INFO 20356 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:25:54.128+05:30  INFO 20356 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:25:54.214+05:30  INFO 20356 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:25:54.328+05:30 ERROR 20356 --- [LegalLens] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.9.jar:3.5.9]
+	at com.contractGuard.LegalLens.LegalLensApplication.main(LegalLensApplication.java:13) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 21 common frames omitted
+Caused by: java.lang.IllegalArgumentException: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.15.jar:6.2.15]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAIAutoConfigurationUtil.resolveConnectionProperties(OpenAIAutoConfigurationUtil.java:58) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration.openAiAudioSpeechModel(OpenAiAudioSpeechAutoConfiguration.java:66) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 24 common frames omitted
+
+2025-12-27T00:27:56.531+05:30  INFO 18604 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 18604 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:27:56.535+05:30 DEBUG 18604 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:27:56.536+05:30  INFO 18604 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:27:57.707+05:30  INFO 18604 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:27:57.731+05:30  INFO 18604 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:27:58.394+05:30  INFO 18604 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:27:58.407+05:30  INFO 18604 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:27:58.408+05:30  INFO 18604 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:27:58.473+05:30  INFO 18604 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:27:58.473+05:30  INFO 18604 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1857 ms
+2025-12-27T00:27:58.660+05:30  INFO 18604 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:27:58.712+05:30  INFO 18604 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:27:58.756+05:30  INFO 18604 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:27:59.016+05:30  INFO 18604 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:27:59.045+05:30  INFO 18604 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:27:59.222+05:30  INFO 18604 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6ceb11f9
+2025-12-27T00:27:59.223+05:30  INFO 18604 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:27:59.261+05:30  WARN 18604 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:27:59.282+05:30  INFO 18604 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:27:59.713+05:30  INFO 18604 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:27:59.721+05:30  INFO 18604 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:28:00.047+05:30  WARN 18604 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:28:03.263+05:30  WARN 18604 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+2025-12-27T00:28:03.275+05:30  INFO 18604 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:28:03.302+05:30  INFO 18604 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:28:03.400+05:30  INFO 18604 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:28:03.420+05:30  INFO 18604 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:28:03.599+05:30  INFO 18604 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:28:03.749+05:30 ERROR 18604 --- [LegalLens] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioSpeechModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioSpeechAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.9.jar:3.5.9]
+	at com.contractGuard.LegalLens.LegalLensApplication.main(LegalLensApplication.java:13) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioSpeechModel]: Factory method 'openAiAudioSpeechModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 21 common frames omitted
+Caused by: java.lang.IllegalArgumentException: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.speech.api-key property.
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.15.jar:6.2.15]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAIAutoConfigurationUtil.resolveConnectionProperties(OpenAIAutoConfigurationUtil.java:58) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration.openAiAudioSpeechModel(OpenAiAudioSpeechAutoConfiguration.java:66) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 24 common frames omitted
+
+2025-12-27T00:30:36.724+05:30  INFO 20948 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 20948 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:30:36.744+05:30 DEBUG 20948 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:30:36.754+05:30  INFO 20948 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:30:43.811+05:30  INFO 20948 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:30:44.029+05:30  INFO 20948 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 124 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:30:47.918+05:30  INFO 20948 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:30:48.001+05:30  INFO 20948 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:30:48.004+05:30  INFO 20948 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:30:48.466+05:30  INFO 20948 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:30:48.469+05:30  INFO 20948 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 11341 ms
+2025-12-27T00:30:49.571+05:30  INFO 20948 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:30:49.794+05:30  INFO 20948 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:30:49.915+05:30  INFO 20948 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:30:50.603+05:30  INFO 20948 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:30:50.662+05:30  INFO 20948 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:30:51.003+05:30  INFO 20948 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7402c49f
+2025-12-27T00:30:51.008+05:30  INFO 20948 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:30:51.086+05:30  WARN 20948 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:30:51.134+05:30  INFO 20948 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:30:51.950+05:30  INFO 20948 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:30:51.962+05:30  INFO 20948 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:30:52.277+05:30  WARN 20948 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:30:53.228+05:30  WARN 20948 --- [LegalLens] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioTranscriptionModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioTranscriptionAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioTranscriptionModel]: Factory method 'openAiAudioTranscriptionModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.transcription.api-key property.
+2025-12-27T00:30:53.231+05:30  INFO 20948 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:30:53.240+05:30  INFO 20948 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:30:53.253+05:30  INFO 20948 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:30:53.263+05:30  INFO 20948 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-27T00:30:53.307+05:30  INFO 20948 --- [LegalLens] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-27T00:30:53.352+05:30 ERROR 20948 --- [LegalLens] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openAiAudioTranscriptionModel' defined in class path resource [org/springframework/ai/model/openai/autoconfigure/OpenAiAudioTranscriptionAutoConfiguration.class]: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioTranscriptionModel]: Factory method 'openAiAudioTranscriptionModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.transcription.api-key property.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1228) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1194) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1130) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:990) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.15.jar:6.2.15]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.9.jar:3.5.9]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.9.jar:3.5.9]
+	at com.contractGuard.LegalLens.LegalLensApplication.main(LegalLensApplication.java:13) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.ai.openai.OpenAiAudioTranscriptionModel]: Factory method 'openAiAudioTranscriptionModel' threw exception with message: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.transcription.api-key property.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.15.jar:6.2.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 21 common frames omitted
+Caused by: java.lang.IllegalArgumentException: OpenAI API key must be set. Use the connection property: spring.ai.openai.api-key or spring.ai.openai.transcription.api-key property.
+	at org.springframework.util.Assert.hasText(Assert.java:253) ~[spring-core-6.2.15.jar:6.2.15]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAIAutoConfigurationUtil.resolveConnectionProperties(OpenAIAutoConfigurationUtil.java:58) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration.openAiAudioTranscriptionModel(OpenAiAudioTranscriptionAutoConfiguration.java:66) ~[spring-ai-autoconfigure-model-openai-1.1.1.jar:1.1.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.15.jar:6.2.15]
+	... 24 common frames omitted
+
+2025-12-27T00:32:46.722+05:30  INFO 1880 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 1880 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:32:46.725+05:30 DEBUG 1880 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:32:46.726+05:30  INFO 1880 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:32:47.540+05:30  INFO 1880 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:32:47.563+05:30  INFO 1880 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:32:48.147+05:30  INFO 1880 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:32:48.159+05:30  INFO 1880 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:32:48.160+05:30  INFO 1880 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:32:48.225+05:30  INFO 1880 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:32:48.226+05:30  INFO 1880 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1442 ms
+2025-12-27T00:32:48.425+05:30  INFO 1880 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:32:48.478+05:30  INFO 1880 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:32:48.524+05:30  INFO 1880 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:32:48.804+05:30  INFO 1880 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:32:48.834+05:30  INFO 1880 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:32:49.012+05:30  INFO 1880 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@36d7a68a
+2025-12-27T00:32:49.014+05:30  INFO 1880 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:32:49.056+05:30  WARN 1880 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:32:49.078+05:30  INFO 1880 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:32:49.463+05:30  INFO 1880 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:32:49.469+05:30  INFO 1880 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:32:49.592+05:30  WARN 1880 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:32:50.179+05:30 DEBUG 1880 --- [LegalLens] [main] o.s.a.m.t.a.ToolCallingAutoConfiguration : Cannot load class: org.springframework.security.oauth2.client.ClientAuthorizationException
+2025-12-27T00:32:50.427+05:30  WARN 1880 --- [LegalLens] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: f63a6702-a8c4-4b6b-bc99-dcac265dd783
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-12-27T00:32:50.435+05:30  INFO 1880 --- [LegalLens] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-12-27T00:32:50.622+05:30  INFO 1880 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2025-12-27T00:32:50.639+05:30  INFO 1880 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Started LegalLensApplication in 4.541 seconds (process running for 5.296)
+2025-12-27T00:33:11.540+05:30  INFO 1880 --- [LegalLens] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-27T00:33:14.603+05:30  INFO 1880 --- [LegalLens] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-27T00:33:14.668+05:30  INFO 1880 --- [LegalLens] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:33:14.698+05:30  INFO 1880 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:33:14.786+05:30  INFO 1880 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:34:31.846+05:30  INFO 5660 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 5660 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:34:31.873+05:30 DEBUG 5660 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:34:31.885+05:30  INFO 5660 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:34:43.837+05:30  INFO 5660 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:34:44.122+05:30  INFO 5660 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 130 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:34:51.400+05:30  INFO 5660 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:34:51.507+05:30  INFO 5660 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:34:51.511+05:30  INFO 5660 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:34:52.278+05:30  INFO 5660 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:34:52.284+05:30  INFO 5660 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 19871 ms
+2025-12-27T00:34:55.344+05:30  INFO 5660 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:34:56.018+05:30  INFO 5660 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:34:56.425+05:30  INFO 5660 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:34:59.420+05:30  INFO 5660 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:34:59.711+05:30  INFO 5660 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:35:01.311+05:30  INFO 5660 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4247093b
+2025-12-27T00:35:01.328+05:30  INFO 5660 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:35:01.699+05:30  WARN 5660 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:35:01.901+05:30  INFO 5660 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:35:05.320+05:30  INFO 5660 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:35:05.378+05:30  INFO 5660 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:35:06.678+05:30  WARN 5660 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:35:12.081+05:30 DEBUG 5660 --- [LegalLens] [main] o.s.a.m.t.a.ToolCallingAutoConfiguration : Cannot load class: org.springframework.security.oauth2.client.ClientAuthorizationException
+2025-12-27T00:35:15.305+05:30  WARN 5660 --- [LegalLens] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d7e00de5-c34d-475a-99cc-52876dcd08f3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-12-27T00:35:15.361+05:30  INFO 5660 --- [LegalLens] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-12-27T00:35:16.554+05:30  INFO 5660 --- [LegalLens] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-12-27T00:35:18.589+05:30  INFO 5660 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2025-12-27T00:35:18.777+05:30  INFO 5660 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Started LegalLensApplication in 54.055 seconds (process running for 75.113)
+2025-12-27T00:41:35.945+05:30  INFO 5660 --- [LegalLens] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-27T00:41:35.990+05:30  INFO 5660 --- [LegalLens] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-27T00:41:35.998+05:30  INFO 5660 --- [LegalLens] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:41:36.001+05:30  INFO 5660 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T00:41:36.004+05:30  INFO 5660 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-27T00:43:42.461+05:30  INFO 12028 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Starting LegalLensApplication using Java 17.0.2 with PID 12028 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+2025-12-27T00:43:42.465+05:30 DEBUG 12028 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Running with Spring Boot v3.5.9, Spring v6.2.15
+2025-12-27T00:43:42.467+05:30  INFO 12028 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-12-27T00:43:43.876+05:30  INFO 12028 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-27T00:43:43.900+05:30  INFO 12028 --- [LegalLens] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 JPA repository interfaces.
+2025-12-27T00:43:44.561+05:30  INFO 12028 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-27T00:43:44.573+05:30  INFO 12028 --- [LegalLens] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-27T00:43:44.573+05:30  INFO 12028 --- [LegalLens] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2025-12-27T00:43:44.639+05:30  INFO 12028 --- [LegalLens] [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-27T00:43:44.640+05:30  INFO 12028 --- [LegalLens] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2114 ms
+2025-12-27T00:43:44.961+05:30  INFO 12028 --- [LegalLens] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-27T00:43:45.008+05:30  INFO 12028 --- [LegalLens] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2025-12-27T00:43:45.040+05:30  INFO 12028 --- [LegalLens] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-27T00:43:45.301+05:30  INFO 12028 --- [LegalLens] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-27T00:43:45.331+05:30  INFO 12028 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-27T00:43:45.499+05:30  INFO 12028 --- [LegalLens] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@667dd150
+2025-12-27T00:43:45.501+05:30  INFO 12028 --- [LegalLens] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-27T00:43:45.545+05:30  WARN 12028 --- [LegalLens] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-27T00:43:45.572+05:30  INFO 12028 --- [LegalLens] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-27T00:43:45.983+05:30  INFO 12028 --- [LegalLens] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-27T00:43:45.990+05:30  INFO 12028 --- [LegalLens] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T00:43:46.118+05:30  WARN 12028 --- [LegalLens] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-27T00:43:46.750+05:30 DEBUG 12028 --- [LegalLens] [main] o.s.a.m.t.a.ToolCallingAutoConfiguration : Cannot load class: org.springframework.security.oauth2.client.ClientAuthorizationException
+2025-12-27T00:43:47.170+05:30  WARN 12028 --- [LegalLens] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 837277ca-01b6-4667-8204-e6c14105576e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-12-27T00:43:47.178+05:30  INFO 12028 --- [LegalLens] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-12-27T00:43:47.294+05:30  INFO 12028 --- [LegalLens] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-12-27T00:43:47.525+05:30  INFO 12028 --- [LegalLens] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2025-12-27T00:43:47.547+05:30  INFO 12028 --- [LegalLens] [main] c.c.LegalLens.LegalLensApplication       : Started LegalLensApplication in 5.704 seconds (process running for 6.494)
+2025-12-27T00:43:47.950+05:30  INFO 12028 --- [LegalLens] [RMI TCP Connection(3)-192.168.1.6] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-27T00:43:47.951+05:30  INFO 12028 --- [LegalLens] [RMI TCP Connection(3)-192.168.1.6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-27T00:43:47.953+05:30  INFO 12028 --- [LegalLens] [RMI TCP Connection(3)-192.168.1.6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-12-27T01:03:34.639+05:30  INFO 12028 --- [LegalLens] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-27T01:03:34.687+05:30  INFO 12028 --- [LegalLens] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-27T01:03:34.695+05:30  INFO 12028 --- [LegalLens] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-27T01:03:34.699+05:30  INFO 12028 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-27T01:03:34.702+05:30  INFO 12028 --- [LegalLens] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

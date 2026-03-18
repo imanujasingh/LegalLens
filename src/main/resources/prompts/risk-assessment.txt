@@ -1,0 +1,70 @@
+You are a legal risk analysis assistant.
+
+Analyze the following contract from the perspective of the specified party.
+Your goal is to identify overall legal and commercial risk exposure, not to rewrite the contract.
+
+Party name: {partyName}
+Party role: {partyRole}
+Jurisdiction: {jurisdiction}
+
+----------------------------
+CONTRACT TEXT
+----------------------------
+{contractText}
+----------------------------
+
+INSTRUCTIONS:
+
+1. Read the ENTIRE contract carefully.
+2. Assume the analysis is strictly for the benefit of {partyName}.
+3. Focus only on risks that negatively affect {partyName}.
+4. Do NOT provide generic legal disclaimers.
+5. Do NOT suggest contract wording changes.
+6. Do NOT invent or assume clauses that are not explicitly present.
+
+ANALYSIS GUIDELINES:
+
+When analyzing the contract, pay particular attention to:
+- Indemnification obligations
+- Limitation of liability or absence of liability caps
+- Termination rights, notice periods, and cure periods
+- Intellectual property ownership and licensing
+- Confidentiality scope and duration
+- Penalties, liquidated damages, or financial exposure
+- Governing law and jurisdiction mismatches
+- Obligations that are one-sided or unlimited
+
+OUTPUT FORMAT (IMPORTANT):
+
+Respond in plain English paragraphs.
+Explicitly use one or more of the following phrases verbatim where applicable:
+- "high risk"
+- "medium risk"
+- "low risk"
+
+If the contract contains serious exposure, explicitly state:
+"high risk due to ..."
+
+If the contract is generally balanced, explicitly state:
+"overall risk is moderate" or "overall risk is low"
+
+Do NOT return JSON.
+Do NOT include headings.
+Do NOT include legal disclaimers.
+
+FINAL SUMMARY REQUIREMENT (VERY IMPORTANT):
+
+At the end of your response, include a section titled exactly:
+
+Clause-level risk summary:
+
+For each numbered clause in the contract:
+- Write exactly ONE bullet point
+- Start each bullet with: "Clause X (Clause Title):"
+- Describe the key risk or impact in ONE concise sentence
+- Do not repeat explanations across bullets
+- Do not add sub-bullets
+
+After this section, do not add any further text.
+
+Your response should be concise, factual, and focused on risk assessment.

@@ -1,0 +1,74 @@
+[32m18:31:46.887[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.c.L.LegalLensApplication[0;39m - Starting LegalLensApplication using Java 17.0.2 with PID 23860 (F:\Spring AI\LegalLens\target\classes started by anuja in F:\Spring AI\LegalLens)
+[32m18:31:46.947[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.c.L.LegalLensApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[32m18:31:56.265[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[32m18:31:57.201[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 890 ms. Found 8 JPA repository interfaces.
+[32m18:31:59.970[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.b.w.e.t.TomcatWebServer[0;39m - Tomcat initialized with port 8080 (http)
+[32m18:32:00.022[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.a.c.c.StandardService[0;39m - Starting service [Tomcat]
+[32m18:32:00.022[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.a.c.c.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.50]
+[32m18:32:00.324[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.a.c.c.C.[.[.[/api][0;39m - Initializing Spring embedded WebApplicationContext
+[32m18:32:00.326[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 12836 ms
+[32m18:32:01.833[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.h.j.i.u.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[32m18:32:02.140[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.h.Version[0;39m - HHH000412: Hibernate ORM core version 6.6.39.Final
+[32m18:32:02.312[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[32m18:32:03.747[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[32m18:32:03.864[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.z.h.HikariDataSource[0;39m - HikariPool-1 - Starting...
+[32m18:32:04.398[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.z.h.p.HikariPool[0;39m - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@becb93a
+[32m18:32:04.401[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.z.h.HikariDataSource[0;39m - HikariPool-1 - Start completed.
+[32m18:32:04.517[0;39m [34mWARN [0;39m [31m[main][0;39m [33mo.h.o.deprecation[0;39m - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+[32m18:32:04.569[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.h.o.c.pooling[0;39m - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+[32m18:32:08.190[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[32m18:32:09.105[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[32m18:32:10.336[0;39m [34mWARN [0;39m [31m[main][0;39m [33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[32m18:32:10.464[0;39m [34mWARN [0;39m [31m[main][0;39m [33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: 1fd151b4-3ef1-407b-8ce1-a0d2baf4c2a7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[32m18:32:10.482[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer[0;39m - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+[32m18:32:13.004[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.d.j.r.q.QueryEnhancerFactory[0;39m - Hibernate is in classpath; If applicable, HQL parser will be used.
+[32m18:32:14.322[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.b.a.e.w.EndpointLinksResolver[0;39m - Exposing 1 endpoint beneath base path '/actuator'
+[32m18:32:14.607[0;39m [34mINFO [0;39m [31m[main][0;39m [33mo.s.b.w.e.t.TomcatWebServer[0;39m - Tomcat started on port 8080 (http) with context path '/api'
+[32m18:32:14.643[0;39m [34mINFO [0;39m [31m[main][0;39m [33mc.c.L.LegalLensApplication[0;39m - Started LegalLensApplication in 32.114 seconds (process running for 39.207)
+[32m18:33:19.865[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mo.a.c.c.C.[.[.[/api][0;39m - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[32m18:33:19.865[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mo.s.w.s.DispatcherServlet[0;39m - Initializing Servlet 'dispatcherServlet'
+[32m18:33:19.865[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mo.s.w.s.DispatcherServlet[0;39m - Completed initialization in 0 ms
+[32m18:33:20.095[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.c.ContractController[0;39m - Contract upload request: sample_contract (1).pdf, party: Acme Technologies
+[32m18:33:20.097[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.ContractService[0;39m - Processing contract upload for party=Acme Technologies, file=sample_contract (1).pdf
+[32m18:33:20.097[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.p.DocumentParserService[0;39m - Parsing document: sample_contract (1).pdf, Type: application/pdf
+[32m18:33:21.122[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.a.AIService[0;39m - Inside AIService.analyzeContract for party: Acme Technologies
+[32m18:33:21.132[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.a.PromptBuilder[0;39m - Inside buildContractAnalysisParameters
+[32m18:33:48.114[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.ContractService[0;39m - AI Analysis Result: Overall this agreement is high risk for Acme Technologies because it combines a one-way, unlimited indemnity in favor of the Vendor with no stated limits on Acme’s exposure, while also giving Acme no ownership of deliverables and allowing immediate termination without cause. Commercially, Acme could pay for development yet end up without usable rights to the work product, and legally it could be pulled into broad third‑party claims and defense costs.
+
+Clause 3 is high risk because Acme must “indemnify, defend, and hold harmless” the Vendor from “all claims” with no carve-outs, limits, or linkage to Acme’s fault; this can include third‑party IP infringement allegations, data/privacy claims, employment/contractor disputes, or regulatory matters arising from the Vendor’s work, and it also explicitly includes defense obligations (immediate cost outlay). The breadth (“all claims”) creates potentially uncapped and unpredictable liability for Acme.
+
+Clause 4 is medium risk to Acme in a different way: it states the Vendor’s liability is unlimited, including indirect and consequential damages, which on its face favors Acme as the claimant; however, it also signals a poorly calibrated risk allocation and increases the likelihood of disputes, and it does not offset Acme’s much broader exposure under the one-way indemnity. It also creates uncertainty because “unlimited” and “including indirect and consequential damages” can be interpreted inconsistently and may complicate enforcement and settlement dynamics.
+
+Clause 6 is high risk because all intellectual property created by the Vendor remains the Vendor’s property, and there is no express license grant to Acme; this means Acme may have no legal right to use, modify, deploy, or commercialize the deliverables even if it pays for them, and could face infringement or breach allegations if it uses the output beyond any implied rights. This is a major commercial dependency risk and can undermine the entire value of the services.
+
+Clause 5 is medium risk because either party can terminate immediately without cause, with no notice or cure period; Acme can lose continuity mid‑project, face re‑procurement and transition costs, and have no contractual mechanism to require completion, handover, or remediation before termination. The absence of any stated post‑termination obligations increases operational uncertainty.
+
+Clause 2 is medium risk because confidentiality is stated at a very high level (“all non-public information”) with no duration, no permitted disclosures, and no handling/return requirements; this ambiguity can expose Acme to allegations of breach based on ordinary business use or necessary internal sharing, and it provides limited clarity on how long Acme must protect Vendor information. It also does not expressly protect Acme against the Vendor’s misuse beyond the generic mutual obligation, leaving enforcement and scope uncertain.
+
+Clause 7 is medium risk for an India-based client because California governing law increases cost and complexity of advice, dispute strategy, and enforcement, and it may create practical barriers to pursuing remedies from India. The contract also does not specify forum/venue, so Acme faces uncertainty about where disputes will be litigated or arbitrated and the associated expense.
+
+Clause 1 is low to medium risk because the scope of services is extremely vague (“software development and consulting services”) with no deliverables, acceptance criteria, timelines, service levels, or pricing terms stated; this increases the risk of scope creep, misaligned expectations, and difficulty proving non-performance or measuring completion. The lack of specificity weakens Acme’s leverage in any performance dispute.
+
+Clause-level risk summary:
+- Clause 1 (Scope of Services): Vague service description creates medium risk of scope disputes and weak enforceability of performance expectations for Acme.
+- Clause 2 (Confidential Information): Broad but undefined confidentiality obligations create medium risk of accidental breach allegations and unclear duration/handling requirements.
+- Clause 3 (Indemnification): One-way “indemnify, defend, and hold harmless” for all claims is high risk due to potentially unlimited third-party liability and defense costs for Acme.
+- Clause 4 (Limitation of Liability): Vendor’s “unlimited” liability including consequential damages is medium risk because it is atypical/uncertain and does not balance Acme’s broader indemnity exposure.
+- Clause 5 (Term and Termination): Immediate termination without cause is medium risk due to project disruption and lack of cure/transition protections for Acme.
+- Clause 6 (Intellectual Property): Vendor retains all IP with no express license is high risk due to Acme potentially lacking rights to use deliverables it pays for.
+- Clause 7 (Governing Law): California law is medium risk for an India-based client due to increased cost/complexity and uncertainty on dispute forum.
+[32m18:33:48.116[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.s.RiskEvaluationService[0;39m - Starting risk evaluation from AI analysis text.
+[32m18:33:48.125[0;39m [34mINFO [0;39m [31m[http-nio-8080-exec-2][0;39m [33mc.c.L.c.ContractController[0;39m - Contract upload done: sample_contract (1).pdf, analysis status: COMPLETED
+[32m19:38:54.780[0;39m [34mWARN [0;39m [31m[HikariPool-1:housekeeper][0;39m [33mc.z.h.p.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=45m101ms5µs400ns).

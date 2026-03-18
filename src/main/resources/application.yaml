@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: LegalLens
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+  jmx:
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+            batch_size: 20
+            order_inserts: true
+            order_updates: true
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  ai:
+    openai:
+      # Do NOT commit real API keys to source control. Read from env var OPENAI_API_KEY.
+      api-key: ${OPENAI_API_KEY:}
+    chat:
+      options:
+        temperature: 0.1
+        max-tokens: 4000
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.legalLens: DEBUG
+    org.springframework.ai: INFO
+    org.hibernate.SQL: WARN
+  file:
+    name: logs/legal-lens.log
+  pattern:
+    console: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n"
+    file: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
+
+legal-lens:
+  upload:
+    directory: ./uploads/
+    max-file-size-mb: 20
+    allowed-types: "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+
