@@ -4,6 +4,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Runtime logs - ignore generated log files and the logs directory
+/logs/
+*.log
+*.log.*
+*.gz
+
 ### STS ###
 .apt_generated
 .classpath

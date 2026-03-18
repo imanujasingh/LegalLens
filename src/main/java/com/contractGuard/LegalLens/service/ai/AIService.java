@@ -10,6 +10,9 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
+
+import com.contractGuard.LegalLens.exception.AiUnavailableException;
 
 import java.util.Map;
 
@@ -35,12 +38,20 @@ public class AIService {
 
         Prompt prompt = template.create(params);
 
-        ChatResponse response = standardChatClient
-                .prompt(prompt)
-                .call()
-                .chatResponse();
+        try {
+            ChatResponse response = standardChatClient
+                    .prompt(prompt)
+                    .call()
+                    .chatResponse();
 
-        return extractText(response);
+            return extractText(response);
+        } catch (ResourceAccessException rae) {
+            log.error("AI service network error: {}", rae.getMessage(), rae);
+            throw new AiUnavailableException("AI service unavailable due to network error: " + rae.getMessage());
+        } catch (Exception ex) {
+            log.error("AI service failed: {}", ex.getMessage(), ex);
+            throw new AiUnavailableException("AI service failed: " + ex.getMessage());
+        }
     }
 
     private String extractText(ChatResponse response) {

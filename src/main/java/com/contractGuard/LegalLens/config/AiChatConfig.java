@@ -13,7 +13,7 @@ public class AiChatConfig {
         return builder
                 .defaultOptions(
                         ChatOptions.builder()
-                                .model("gpt-5.2")
+                                .model("gpt-4o")
                                 .temperature(0.1)
                                 .build()
                 )
@@ -25,7 +25,7 @@ public class AiChatConfig {
         return builder
                 .defaultOptions(
                         ChatOptions.builder()
-                                .model("gpt-5.2")
+                                .model("gpt-4o")
                                 .temperature(0.1)
                                 .build()
                 )
