@@ -30,9 +30,7 @@ import java.security.*;
 @RequiredArgsConstructor
 public class ContractService {
 
-    private final DocumentParserService documentParserService;
-    private final AIService aiService;
-    private final RiskEvaluationService riskEvaluationService;
+    private final ContractAnalysisWorker contractAnalysisWorker;
     private final ContractRepository contractRepository;
     private final PartyProfileRepository partyProfileRepository;
 
@@ -66,7 +64,7 @@ public class ContractService {
         ContractEntity saved = contractRepository.save(contract);
 
         // 5. Trigger background analysis — non-blocking
-        analyzeContractAsync(saved.getId(), file.getBytes(), profile);
+        contractAnalysisWorker.analyzeContractAsync(saved.getId(), file.getBytes(), profile.getId());
 
         // 6. Return 202 immediately
         log.info("Contract saved id={}, uuid={} — analysis queued",
@@ -79,49 +77,6 @@ public class ContractService {
 
     }
 
-    // ─── BACKGROUND THREAD — does the heavy lifting ───────────────────────────
-    @Async("contractAnalysisExecutor")
-    @Transactional
-    public void analyzeContractAsync(Long contractId, byte[] fileBytes, PartyProfileEntity profile) throws IOException {
-        log.info("background analysis for contract={} started", contractId);
-        ContractEntity contract = contractRepository.findById(contractId).
-                orElseThrow(() -> new IllegalStateException("Contract not found"));
-
-        try{
-            updateStatus(contract,AnalysisStatus.PARSING,10);
-            String parsedText=documentParserService.parseBytes(
-                    fileBytes,
-                    contract.getOriginalFilename(),
-                    contract.getContentType()
-            );
-            contract.setParsedText(parsedText);
-            contractRepository.save(contract);
-
-            // Step 2: AI analysis
-            updateStatus(contract, AnalysisStatus.ANALYZING, 40);
-            String aiResult = aiService.analyzeContract(parsedText, profile);
-
-            // Step 3: Risk evaluation
-            updateStatus(contract, AnalysisStatus.ANALYZING, 80);
-            var riskResult = riskEvaluationService.evaluateRisk(aiResult);
-
-            // Step 4: Save results and mark COMPLETED
-            contract.setRiskScore(riskResult.getRiskScore());
-            contract.setAiSummary(aiResult);
-            updateStatus(contract, AnalysisStatus.COMPLETED, 100);
-            contractRepository.save(contract);
-
-            log.info("Analysis completed for contractId={}, risk={}",
-                    contractId, riskResult.getRiskLevel());
-
-        } catch (Exception e) {
-            log.error("Analysis failed for contractId={}: {}", contractId, e.getMessage(), e);
-            contract.setFailureReason(e.getMessage());
-            updateStatus(contract, AnalysisStatus.FAILED, 0);
-            contractRepository.save(contract);
-        }
-
-    }
 
     // ─── STATUS POLLING ────────────────────────────────────────────────────────
 
@@ -158,14 +113,6 @@ public class ContractService {
 
     // ─── HELPERS ───────────────────────────────────────────────────────────────
 
-    private void updateStatus(ContractEntity contract, AnalysisStatus status, int progress) {
-        contract.setAnalysisStatus(status);
-        contract.setProgressPercentage(progress);
-        contractRepository.save(contract);
-        log.debug("contractId={} → status={}, progress={}%",
-                contract.getId(), status, progress);
-    }
-
     private PartyProfileEntity findOrCreateProfile(String partyName,
                                                    String partyRole,
                                                    String jurisdiction) {
@@ -178,7 +125,6 @@ public class ContractService {
                     return partyProfileRepository.save(profile);
                 });
     }
-
     private String computeHash(byte[] bytes) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

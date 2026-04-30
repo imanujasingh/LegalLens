@@ -25,9 +25,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         jdbc:
-            batch_size: 20
-            order_inserts: true
-            order_updates: true
+          batch_size: 20
+          order_inserts: true
+          order_updates: true
+          time_zone: Asia/Kolkata
     show-sql: false
   servlet:
     multipart:
