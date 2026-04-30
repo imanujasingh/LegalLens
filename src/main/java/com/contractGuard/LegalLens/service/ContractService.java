@@ -13,13 +13,13 @@ import com.contractGuard.LegalLens.exception.ContractNotFoundException;
 import com.contractGuard.LegalLens.exception.DuplicateContractException;
 import com.contractGuard.LegalLens.repository.ContractRepository;
 import com.contractGuard.LegalLens.repository.PartyProfileRepository;
-import com.contractGuard.LegalLens.service.ai.AIService;
-import com.contractGuard.LegalLens.service.parser.DocumentParserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,7 +35,11 @@ public class ContractService {
     private final PartyProfileRepository partyProfileRepository;
 
     @Transactional
-    public ContractUploadResponse uploadContract(MultipartFile file, String partyName, String partyRole, String jurisdiction) throws IOException {
+    public ContractUploadResponse uploadContract(MultipartFile file,
+                                                 String partyName,
+                                                 String partyRole,
+                                                 String jurisdiction,
+                                                 String parentContractUuid) throws IOException {
         log.info("Upload request - file={}, party={}", file.getOriginalFilename(), partyName);
         //Step 1: Validate
         validateUpload(file,partyName);
@@ -47,6 +51,8 @@ public class ContractService {
                     "This file was already uploaded. Contract UUID: "+existing.getContractUuid()
             );
         });
+
+        ContractEntity parentContract = findParentContract(parentContractUuid);
 
         //Step 3: Find or create party profile
         PartyProfileEntity profile=findOrCreateProfile(partyName, partyRole,jurisdiction);
@@ -60,17 +66,34 @@ public class ContractService {
         contract.setPartyProfile(profile);
         contract.setAnalysisStatus(AnalysisStatus.UPLOADING);
         contract.setProgressPercentage(0);
+        if (parentContract != null) {
+            parentContract.setIsLatestVersion(false);
+            contractRepository.save(parentContract);
+            contract.setParentContract(parentContract);
+            contract.setVersion(parentContract.getVersion() + 1);
+        }
+        contract.setIsLatestVersion(true);
 
         ContractEntity saved = contractRepository.save(contract);
 
-        // 5. Trigger background analysis — non-blocking
-        contractAnalysisWorker.analyzeContractAsync(saved.getId(), file.getBytes(), profile.getId());
+        // 5. Trigger background analysis after commit so the worker can reload saved rows safely.
+        byte[] fileBytes = file.getBytes();
+        Long profileId = profile.getId();
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                contractAnalysisWorker.analyzeContractAsync(saved.getId(), fileBytes, profileId);
+            }
+        });
 
         // 6. Return 202 immediately
         log.info("Contract saved id={}, uuid={} — analysis queued",
                 saved.getId(), saved.getContractUuid());
         return new ContractUploadResponse(
                 saved.getContractUuid(),
+                parentContract != null ? parentContract.getContractUuid() : null,
+                saved.getVersion(),
+                saved.getIsLatestVersion(),
                 AnalysisStatus.UPLOADING,
                 "Contract uploaded successfully. Analysis in progress."
         );
@@ -80,6 +103,7 @@ public class ContractService {
 
     // ─── STATUS POLLING ────────────────────────────────────────────────────────
 
+    @Cacheable(value = "contractStatus", key = "#contractUuid")
     public ContractStatusResponse getStatus(String contractUuid) {
         ContractEntity contract = contractRepository.findByContractUuid(contractUuid)
                 .orElseThrow(() -> new ContractNotFoundException(contractUuid));
@@ -92,6 +116,8 @@ public class ContractService {
         );
     }
 
+    @Cacheable(value = "contractResult", key = "#contractUuid", unless = "#result == null || #result.analysisStatus.name() != 'COMPLETED'")
+    @Transactional
     public ContractAnalysisResponse getResult(String contractUuid) {
         ContractEntity contract = contractRepository.findByContractUuid(contractUuid)
                 .orElseThrow(() -> new ContractNotFoundException(contractUuid));
@@ -124,6 +150,14 @@ public class ContractService {
                     profile.setJurisdiction(jurisdiction);
                     return partyProfileRepository.save(profile);
                 });
+    }
+
+    private ContractEntity findParentContract(String parentContractUuid) {
+        if (parentContractUuid == null || parentContractUuid.isBlank()) {
+            return null;
+        }
+        return contractRepository.findByContractUuid(parentContractUuid)
+                .orElseThrow(() -> new ContractNotFoundException(parentContractUuid));
     }
     private String computeHash(byte[] bytes) {
         try {

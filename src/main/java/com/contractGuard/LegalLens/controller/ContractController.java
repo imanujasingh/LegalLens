@@ -32,11 +32,12 @@ public class ContractController {
             @RequestParam("file") MultipartFile file,
             @RequestParam @NotBlank String partyName,
             @RequestParam @NotBlank String partyRole,
-            @RequestParam(required = false, defaultValue = "India") String jurisdiction)
+            @RequestParam(required = false, defaultValue = "India") String jurisdiction,
+            @RequestParam(required = false) String parentContractUuid)
             throws IOException {
 
         ContractUploadResponse response = contractService.uploadContract(
-                file, partyName, partyRole, jurisdiction
+                file, partyName, partyRole, jurisdiction, parentContractUuid
         );
         return ResponseEntity.accepted().body(response);
     }

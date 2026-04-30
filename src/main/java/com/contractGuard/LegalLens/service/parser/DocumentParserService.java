@@ -35,7 +35,11 @@ public class DocumentParserService {
         } else if (name.endsWith(".txt") ||
                 (contentType != null && contentType.contains("text"))) {
             return new String(bytes, StandardCharsets.UTF_8)
-                    .replaceAll("\\s+", " ").trim();
+                    .replace("\r\n", "\n")
+                    .replace("\r", "\n")
+                    .replaceAll("[ \\t]+", " ")
+                    .replaceAll("\\n{3,}", "\n\n")
+                    .trim();
         } else {
             throw new UnsupportedOperationException(
                     "Unsupported file type. Supported: PDF, DOCX, TXT"
