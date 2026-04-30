@@ -9,6 +9,7 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -20,95 +21,53 @@ import java.nio.file.StandardCopyOption;
 @Slf4j
 public class DocumentParserService {
 
-    public String parseDocument(MultipartFile file) throws IOException {
-        log.info("Parsing document: {}, Type: {}", file.getOriginalFilename(), file.getContentType());
+    public String parseBytes(byte[] bytes, String filename, String contentType)
+            throws IOException {
 
-        String filename = file.getOriginalFilename() != null ? file.getOriginalFilename().toLowerCase() : "";
-        String contentType = file.getContentType();
+        String name = filename != null ? filename.toLowerCase() : "";
 
-        if (filename.endsWith(".pdf") || (contentType != null && contentType.contains("pdf"))) {
-            return parsePDF(file);
-        } else if (filename.endsWith(".docx") || (contentType != null && contentType.contains("word"))) {
-            return parseDocx(file);
-        } else if (filename.endsWith(".txt") || (contentType != null && contentType.contains("text"))) {
-            return parseTxt(file);
+        if (name.endsWith(".pdf") ||
+                (contentType != null && contentType.contains("pdf"))) {
+            return parsePDFBytes(bytes);
+        } else if (name.endsWith(".docx") ||
+                (contentType != null && contentType.contains("word"))) {
+            return parseDocxBytes(bytes);
+        } else if (name.endsWith(".txt") ||
+                (contentType != null && contentType.contains("text"))) {
+            return new String(bytes, StandardCharsets.UTF_8)
+                    .replaceAll("\\s+", " ").trim();
         } else {
-            throw new UnsupportedOperationException("Unsupported file type. Supported: PDF, DOCX, TXT");
+            throw new UnsupportedOperationException(
+                    "Unsupported file type. Supported: PDF, DOCX, TXT"
+            );
         }
     }
 
-    private String parsePDF(MultipartFile file) throws IOException {
-        validateFile(file, 20 * 1024 * 1024, "PDF");
-
-        try (InputStream is = file.getInputStream();
-             PDDocument document = Loader.loadPDF(is.readAllBytes())) {
-
+    private String parsePDFBytes(byte[] bytes) throws IOException {
+        try (PDDocument document = Loader.loadPDF(bytes)) {
             if (document.isEncrypted()) {
-                throw new IllegalArgumentException("Encrypted PDFs are not supported");
+                throw new IllegalArgumentException(
+                        "Encrypted PDFs are not supported"
+                );
             }
-
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setSortByPosition(true);
             return stripper.getText(document);
         }
     }
 
-    private String parseDocx(MultipartFile file) throws IOException {
-        validateFile(file, 5 * 1024 * 1024, "DOCX");
-
-        try (InputStream is = file.getInputStream();
+    private String parseDocxBytes(byte[] bytes) throws IOException {
+        try (InputStream is = new ByteArrayInputStream(bytes);
              XWPFDocument document = new XWPFDocument(is)) {
 
-            StringBuilder textBuilder = new StringBuilder();
-
-            document.getParagraphs().forEach(paragraph -> {
-                if (paragraph.getText() != null && !paragraph.getText().trim().isEmpty()) {
-                    textBuilder.append(paragraph.getText()).append("\n");
+            StringBuilder text = new StringBuilder();
+            document.getParagraphs().forEach(p -> {
+                if (p.getText() != null && !p.getText().trim().isEmpty()) {
+                    text.append(p.getText()).append("\n");
                 }
             });
-
-            document.getTables().forEach(table -> table.getRows().forEach(row -> {
-                row.getTableCells().forEach(cell -> {
-                    if (cell.getText() != null && !cell.getText().trim().isEmpty()) {
-                        textBuilder.append(cell.getText()).append(" ");
-                    }
-                });
-                textBuilder.append("\n");
-            }));
-
-            return textBuilder.toString().trim();
+            return text.toString().trim();
         }
     }
 
-    private String parseTxt(MultipartFile file) throws IOException {
-        validateFile(file, 5 * 1024 * 1024, "TXT");
-        return new String(file.getBytes(), StandardCharsets.UTF_8).replaceAll("\\s+", " ").trim();
-    }
-
-    private void validateFile(MultipartFile file, long maxSize, String fileType) {
-        if (file == null || file.isEmpty()) {
-            throw new IllegalArgumentException(fileType + " file is empty or null");
-        }
-        if (file.getSize() > maxSize) {
-            throw new IllegalArgumentException(fileType + " file exceeds size limit of " + (maxSize / (1024 * 1024)) + " MB");
-        }
-    }
-
-
-    public String saveUploadedFile(MultipartFile file, String uploadDir) throws IOException {
-        Path uploadPath = Path.of(uploadDir);
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        String originalFilename = file.getOriginalFilename();
-        String safeFilename = System.currentTimeMillis() + "_" +
-                (originalFilename != null ? originalFilename.replaceAll("[^a-zA-Z0-9._-]", "_") : "contract");
-
-        Path filePath = uploadPath.resolve(safeFilename);
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        return filePath.toString();
-    }
 }

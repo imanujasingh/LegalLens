@@ -3,6 +3,7 @@ package com.contractGuard.LegalLens.model.enums;
 
 public enum AnalysisStatus {
     // Upload & Initial Processing
+    UPLOADING("Uploading","Contract File is uploading"),
     UPLOADED("Uploaded", "Contract file uploaded successfully"),
     PARSING("Parsing", "Parsing document content"),
     PARSED("Parsed", "Document parsed successfully"),

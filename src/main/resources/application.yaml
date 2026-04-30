@@ -9,8 +9,8 @@ spring:
     enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: admin
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 20
@@ -28,7 +28,7 @@ spring:
             batch_size: 20
             order_inserts: true
             order_updates: true
-    show-sql: true
+    show-sql: false
   servlet:
     multipart:
       max-file-size: 20MB
