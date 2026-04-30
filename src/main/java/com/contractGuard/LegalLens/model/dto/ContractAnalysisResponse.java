@@ -1,13 +1,13 @@
 package com.contractGuard.LegalLens.model.dto;
 
 
+import com.contractGuard.LegalLens.model.entity.ContractEntity;
 import com.contractGuard.LegalLens.model.enums.AnalysisStatus;
 import com.contractGuard.LegalLens.model.enums.RiskLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +37,36 @@ public class ContractAnalysisResponse {
 
     private ContractComparisonDTO comparison; // If this is an update
     private List<SuggestionAdoptionDTO> suggestionsAdopted;
+
+    public static ContractAnalysisResponse from(ContractEntity contract) {
+        ContractAnalysisResponse response = new ContractAnalysisResponse();
+        response.setContractId(contract.getId());
+        response.setContractUuid(contract.getContractUuid());
+        response.setFilename(contract.getOriginalFilename());
+        response.setAnalysisDate(contract.getUpdatedAt());
+        response.setAnalysisStatus(contract.getAnalysisStatus());
+        response.setRiskScore(contract.getRiskScore());
+        response.setOverallRisk(resolveRiskLevel(contract.getRiskScore()));
+        response.setTotalClauses(contract.getClauses() != null ? contract.getClauses().size() : 0);
+        response.setAnalyzedClauses(0);
+        response.setVersion(contract.getVersion());
+        response.setIsLatestVersion(contract.getIsLatestVersion());
+        response.setRiskDistribution(buildRiskDistribution(response.getOverallRisk()));
+        response.setClauseAnalyses(Collections.emptyList());
+        response.setRedFlags(Collections.emptyList());
+        response.setGreenFlags(Collections.emptyList());
+        response.setSummary(contract.getAiSummary());
+        response.setSuggestionsAdopted(Collections.emptyList());
+        return response;
+    }
+
+    private static RiskLevel resolveRiskLevel(Double riskScore) {
+        return riskScore == null ? RiskLevel.NONE : RiskLevel.fromScore(riskScore);
+    }
+
+    private static Map<String, Integer> buildRiskDistribution(RiskLevel riskLevel) {
+        return Map.of(riskLevel.name(), 1);
+    }
 
     @Data
     public static class ClauseAnalysisDTO {

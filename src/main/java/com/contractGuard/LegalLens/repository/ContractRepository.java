@@ -39,5 +39,5 @@ public interface ContractRepository extends JpaRepository<ContractEntity, Long> 
     @Query("SELECT AVG(c.riskScore) FROM ContractEntity c WHERE c.uploadedBy = :uploadedBy AND c.riskScore IS NOT NULL")
     Double findAverageRiskScoreByUploadedBy(@Param("uploadedBy") String uploadedBy);
 
-    Optional<Object> findByFileHash(String fileHash);
+    Optional<ContractEntity> findByFileHash(String fileHash);
 }

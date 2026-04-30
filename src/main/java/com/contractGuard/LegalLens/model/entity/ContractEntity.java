@@ -58,6 +58,9 @@ public class ContractEntity {
     private Integer progressPercentage = 0;
     private Double riskScore;
 
+    @Column(columnDefinition = "TEXT")
+    private String aiSummary;
+
     @Column(name = "version", nullable = false)
     private Integer version = 1;
 

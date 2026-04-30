@@ -4,11 +4,13 @@ package com.contractGuard.LegalLens.service;
 import com.contractGuard.LegalLens.model.dto.ContractAnalysisResponse;
 import com.contractGuard.LegalLens.model.dto.ContractStatusResponse;
 import com.contractGuard.LegalLens.model.dto.ContractUploadResponse;
-import com.contractGuard.LegalLens.model.dto.RiskEvaluationResult;
 import com.contractGuard.LegalLens.model.entity.ContractEntity;
 import com.contractGuard.LegalLens.model.entity.PartyProfileEntity;
 import com.contractGuard.LegalLens.model.enums.AnalysisStatus;
 import com.contractGuard.LegalLens.model.enums.PartyRole;
+import com.contractGuard.LegalLens.exception.AnalysisNotReadyException;
+import com.contractGuard.LegalLens.exception.ContractNotFoundException;
+import com.contractGuard.LegalLens.exception.DuplicateContractException;
 import com.contractGuard.LegalLens.repository.ContractRepository;
 import com.contractGuard.LegalLens.repository.PartyProfileRepository;
 import com.contractGuard.LegalLens.service.ai.AIService;
@@ -21,9 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
 import java.security.*;
 
 @Service
@@ -83,9 +82,9 @@ public class ContractService {
     // ─── BACKGROUND THREAD — does the heavy lifting ───────────────────────────
     @Async("contractAnalysisExecutor")
     @Transactional
-    public void analyzeContractAsync(Long contractUuid, byte[] fileBytes, PartyProfileEntity profile) throws IOException {
-        log.info("background analysis for contract={} started", contractUuid);
-        ContractEntity contract = contractRepository.findById(contractUuid).
+    public void analyzeContractAsync(Long contractId, byte[] fileBytes, PartyProfileEntity profile) throws IOException {
+        log.info("background analysis for contract={} started", contractId);
+        ContractEntity contract = contractRepository.findById(contractId).
                 orElseThrow(() -> new IllegalStateException("Contract not found"));
 
         try{
@@ -193,7 +192,4 @@ public class ContractService {
             throw new IllegalStateException("SHA-256 not available", e);
         }
     }
-}
-
-
 }
