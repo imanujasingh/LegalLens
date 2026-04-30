@@ -1,0 +1,44 @@
+HIGH-RISK MASTER SERVICES AGREEMENT - REVISED VERSION
+
+This Master Services Agreement is entered into on 30 April 2026 between Atlas Retail Private Limited, a company incorporated in India with its principal office in Bengaluru, Karnataka ("Customer"), and Northstar Systems LLP, a technology services provider with its principal office in Pune, Maharashtra ("Vendor").
+
+For LegalLens testing, upload this file from the perspective of:
+Party name: Atlas Retail Private Limited
+Party role: CUSTOMER
+Jurisdiction: India
+
+1. Services:
+Vendor will provide software implementation, support, data migration, and maintenance services for Customer's retail operations platform. Vendor may use subcontractors only after giving written notice to Customer.
+
+2. Fees and Payment:
+Customer must pay all invoices within seven days of receipt. Any disputed invoice must still be paid in full before the dispute is reviewed. Late payments attract a penalty of 5 percent per month until paid.
+
+3. Term:
+This Agreement begins on 1 May 2026 and continues for three years. Customer may not terminate for convenience during the first two years.
+
+5. Confidentiality:
+Each party must protect the other party's confidential information using reasonable safeguards. Vendor may retain Customer confidential information for audit, backup, and internal compliance purposes for seven years after termination.
+
+6. Intellectual Property:
+All pre-existing intellectual property remains with its original owner. Vendor owns all configurations, scripts, templates, workflows, and other deliverables created during the services, and Customer receives only a non-exclusive internal-use license.
+
+7. Customer Data:
+Customer owns its business data. Vendor may process Customer data to provide the services and may aggregate anonymized usage data for benchmarking and product improvement.
+
+8. Indemnity:
+Customer must indemnify, defend, and hold harmless Vendor and its affiliates against all claims, losses, penalties, costs, and expenses arising from Customer data, Customer systems, Customer users, or any third-party allegation connected with Customer's business.
+
+9. Limitation of Liability:
+Vendor's liability is limited to fees paid in the six months before the claim. Customer's liability for payment obligations and confidentiality breaches is capped at twelve months of fees, except for fraud or intentional misconduct.
+
+10. Termination:
+Vendor may immediately terminate this Agreement without notice or cure period if Customer delays payment, fails to provide access, disputes an invoice, undergoes a change of control, or Vendor reasonably believes continued performance may create legal or operational risk.
+
+11. Waiver and Remedies:
+Customer waives any right to seek injunctive relief, specific performance, set-off, or suspension of payment. Vendor may suspend services while continuing to charge fees if Customer raises a dispute.
+
+12. Governing Law and Dispute Resolution:
+This Agreement is governed by the laws of Singapore. All disputes must be resolved by arbitration seated in Singapore. Customer must continue paying all undisputed and disputed amounts during the dispute process.
+
+13. Mutual Cooperation:
+The parties will provide reasonable cooperation and appoint project managers to resolve operational issues in good faith.
