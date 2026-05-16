@@ -1,596 +1,223 @@
-# LegalLens High-Level Design
+# LegalLens — Architecture & Design
 
 ## 1. Project Summary
 
-LegalLens is a Spring Boot backend that accepts legal contract uploads, parses document text, sends the content to an AI model for risk analysis, evaluates the risk score, and exposes asynchronous APIs to track and retrieve the analysis result.
+LegalLens is a Spring Boot backend that accepts legal contract uploads, parses document text, sends content to GPT-4o via Spring AI for risk analysis, evaluates a risk score, and exposes asynchronous APIs to track and retrieve analysis results.
 
-The project is positioned as an AI-assisted contract risk analysis backend. The architecture demonstrates document ingestion, asynchronous processing, AI integration, persistence, and a domain model designed for future clause-level analysis and contract version tracking.
+---
 
 ## 2. Current System Capabilities
 
-### Implemented Today
+### Implemented and Operational
 
-- Upload legal documents through a multipart REST API.
-- Support TXT, PDF, and DOCX parsing.
-- Store contract metadata in PostgreSQL using Spring Data JPA.
-- Detect exact duplicate uploads using SHA-256 file hash.
-- Create or reuse party profiles based on party name.
-- Process uploaded contracts asynchronously through a dedicated worker.
-- Call OpenAI through Spring AI for legal risk analysis.
-- Evaluate AI output into a numeric risk score.
-- Track analysis status using `UPLOADING`, `PARSING`, `ANALYZING`, `COMPLETED`, and `FAILED`.
-- Expose separate APIs for upload, status polling, and result retrieval.
-- Maintain base entities for contract versioning, clauses, clause analysis, negotiation tracking, and suggestion adoption.
+- Upload contracts via multipart REST API (`POST /api/contracts/upload`)
+- Parse PDF, DOCX, and TXT formats (Apache PDFBox, POI, Tika)
+- SHA-256 duplicate detection — rejects exact re-uploads immediately
+- Party-aware analysis — same contract analysed differently for Buyer vs Vendor
+- Async background processing via `@Async` + `ThreadPoolTaskExecutor`
+- Background worker triggered **after transaction commit** (prevents worker/DB race conditions)
+- Clause extraction via regex-based segmentation with SHA-256 text hashing
+- Full contract analysis via OpenAI GPT-4o through Spring AI
+- Revised contract versioning — only added/modified clauses incur LLM cost; unchanged clauses reuse prior analysis
+- Keyword-based risk scoring → `RiskLevel` enum (NONE / LOW / MEDIUM / HIGH / CRITICAL)
+- Status tracking: `UPLOADING → PARSING → ANALYZING → COMPLETED / FAILED`
+- Redis caching for both status polling and completed results (`@Cacheable`)
+- Cache eviction on every status transition (`@CacheEvict` in `ContractStatusService`)
+- Global exception handling for all domain error cases (400 / 404 / 409 / 413 / 415 / 503)
+- JWT authentication filter wired into Spring Security filter chain
+- SpringDoc OpenAPI / Swagger UI at `/api/swagger-ui/index.html`
+- Docker Compose setup for local Postgres + pgAdmin + Redis
 
-### Current API Flow
+### Domain Entities Defined (partially integrated)
 
-```text
-Client
-  -> POST /api/contracts/upload
-      -> ContractService
-          -> saves ContractEntity
-          -> triggers ContractAnalysisWorker asynchronously
-          -> returns contractUuid
+| Entity | Status |
+|---|---|
+| `ContractEntity` | Fully integrated — stores metadata, parsed text, AI summary, risk score, status |
+| `PartyProfileEntity` | Fully integrated — drives party-aware LLM prompting |
+| `ClauseEntity` | Integrated — persisted after extraction, linked to analyses |
+| `ClauseAnalysisEntity` | Integrated — persisted per clause with risk score and raw AI output |
+| `ClauseChange` | Integrated — tracks ADDED / MODIFIED / REMOVED / UNCHANGED per revision |
+| `NegotiationTracking` | Defined, not yet wired into API flow |
+| `SuggestionAdoption` | Defined, not yet wired into API flow |
+| `ContractStatusHistory` | Defined, appended on status transitions |
 
-Client
-  -> GET /api/contracts/{uuid}/status
-      -> returns progress and analysis status
+---
 
-Client
-  -> GET /api/contracts/{uuid}/result
-      -> returns completed AI summary and risk score
+## 3. Component Boundaries
+
+### ContractController
+- Accepts HTTP requests
+- Validates required params
+- Delegates to `ContractService`
+- Returns upload, status, and result DTOs
+
+### ContractService
+- Validates upload
+- Computes SHA-256 file hash for duplicate detection
+- Creates or reuses `PartyProfileEntity`
+- Persists initial `ContractEntity` with `UPLOADING` status
+- Registers `TransactionSynchronization.afterCommit()` to trigger async worker
+- Serves status and result reads
+
+### ContractAnalysisWorker
+- Runs asynchronously on `contractAnalysisExecutor` thread pool (core 5, max 10, queue 25)
+- Reloads contract and party profile by ID (not by JPA entity reference)
+- Parses document bytes
+- Extracts clauses, computes SHA-256 hashes
+- Compares against parent version clauses (if revision) — skips unchanged, re-analyses changed
+- Calls AI service only for new or modified content
+- Evaluates risk score
+- Persists clause analyses (new or cloned from prior version)
+- Updates contract status at each stage
+
+### ContractStatusService
+- Centralises status mutation
+- Issues `@CacheEvict` for both `contractStatus` and `contractResult` on every status change
+- Uses `REQUIRES_NEW` transaction to ensure status persists even if outer transaction rolls back
+
+### ClauseExtractionService
+- Regex pattern: numbered clauses (`1. Title: body text`)
+- Assigns `ClauseType` via keyword matching on title + body
+- Computes SHA-256 text hash for each clause (used for revision diffing)
+- Falls back to single-clause extraction if no numbered structure found
+
+### AIService
+- Builds prompt via `PromptBuilder` using party profile context
+- Calls `standardChatClient` (GPT-4o, temperature 0.1)
+- Returns plain-text analysis
+- Wraps network and API failures as `AiUnavailableException` → 503
+
+### RiskEvaluationService
+- Keyword-based scoring of AI output text
+- Produces `RiskEvaluationResult` with `RiskLevel`, `riskScore`, `redFlags`, `greenFlags`
+
+### DocumentParserService
+- PDF: Apache PDFBox (position-sorted extraction)
+- DOCX: Apache POI XWPF
+- TXT: UTF-8, normalised whitespace
+
+---
+
+## 4. Async Processing Design
+
+```
+Upload request (HTTP thread)
+  └─▶ ContractService.uploadContract()
+        ├─▶ persist ContractEntity (status = UPLOADING)
+        ├─▶ register afterCommit hook
+        └─▶ return 202 to client
+
+Transaction commits
+  └─▶ afterCommit fires
+        └─▶ contractAnalysisWorker.analyzeContractAsync(contractId, fileBytes, partyProfileId)
+              [runs on analysis-N thread, outside HTTP request thread]
 ```
 
-## 3. Current Component Boundaries
+The `afterCommit` pattern ensures the worker never reads a contract row before it's committed and visible. Without this, the worker could start on a Postgres row that doesn't exist yet in a READ COMMITTED isolation level.
 
-### Controller Layer
+---
 
-`ContractController`
+## 5. Caching Design
 
-Responsibilities:
+```
+contractStatus cache:
+  Key: contractUuid
+  TTL: 30 minutes (per RedisCacheConfig default)
+  Populated: ContractService.getStatus()
+  Evicted: ContractStatusService.updateStatus() on every status transition
 
-- Accept HTTP requests.
-- Validate required request parameters.
-- Delegate business logic to service layer.
-- Return upload, status, and result DTOs.
-
-It should not contain document parsing, AI logic, persistence decisions, or risk-scoring logic.
-
-### Application Service Layer
-
-`ContractService`
-
-Responsibilities:
-
-- Validate upload request.
-- Compute file hash.
-- Detect exact duplicate uploads.
-- Create or reuse `PartyProfileEntity`.
-- Persist initial `ContractEntity`.
-- Trigger background analysis.
-- Serve status/result read operations.
-
-This service owns the upload orchestration boundary.
-
-### Background Processing Layer
-
-`ContractAnalysisWorker`
-
-Responsibilities:
-
-- Run analysis outside the upload request path.
-- Reload contract and party profile from the database using IDs.
-- Parse document content.
-- Call AI service.
-- Run risk evaluation.
-- Persist parsed text, AI summary, score, and final status.
-
-This worker owns the long-running processing boundary.
-
-### Status Management Layer
-
-`ContractStatusService`
-
-Responsibilities:
-
-- Update contract status and progress.
-- Centralize status mutation.
-- Provide a future integration point for Redis cache eviction and status history.
-
-### Parser Layer
-
-`DocumentParserService`
-
-Responsibilities:
-
-- Convert supported file formats into plain text.
-- Keep file-type-specific parsing isolated from business logic.
-
-Supported formats:
-
-- TXT
-- PDF
-- DOCX
-
-### AI Integration Layer
-
-`AIService`
-
-Responsibilities:
-
-- Build and send prompts through Spring AI.
-- Return AI-generated contract analysis text.
-- Translate AI/network failures into domain exceptions.
-
-### Risk Evaluation Layer
-
-`RiskEvaluationService`
-
-Responsibilities:
-
-- Convert AI analysis text into a risk score.
-- Derive risk level using keyword-based scoring.
-- Identify basic red/green risk signals internally.
-
-Current limitation: red/green flags are calculated but not persisted or exposed in the final response.
-
-### Persistence Layer
-
-Repositories:
-
-- `ContractRepository`
-- `PartyProfileRepository`
-- `ClauseRepository`
-- `ClauseAnalysisRepository`
-- Negotiation and comparison repositories
-
-Current primary persistence path uses:
-
-- `ContractEntity`
-- `PartyProfileEntity`
-
-Several richer entities already exist but are not fully wired into the runtime flow yet.
-
-## 4. Current Data Model
-
-### Active Runtime Entities
-
-`ContractEntity`
-
-- Stores uploaded file metadata.
-- Stores parsed text.
-- Stores AI summary.
-- Stores risk score.
-- Tracks status and progress.
-- Contains fields for versioning.
-
-`PartyProfileEntity`
-
-- Stores party name, role, jurisdiction, and negotiation preferences.
-- Used to analyze contracts from a specific party's perspective.
-
-### Designed But Not Fully Integrated Yet
-
-`ClauseEntity`
-
-- Intended to store individual clauses extracted from the contract.
-
-`ClauseAnalysisEntity`
-
-- Intended to store clause-level risks, benefits, suggestions, flags, and model metadata.
-
-`ClauseChange`
-
-- Intended to track added, removed, or modified clauses between versions.
-
-`NegotiationTracking`
-
-- Intended to track negotiation rounds and accepted/rejected changes.
-
-`SuggestionAdoption`
-
-- Intended to track whether AI suggestions were adopted in revised versions.
-
-## 5. Why Upload, Status, and Result Are Separate APIs
-
-AI analysis can take time. A single synchronous upload-and-result request can timeout or create a poor user experience.
-
-The current design uses an asynchronous job-style pattern:
-
-```text
-Upload API:
-  accepts file and starts analysis
-
-Status API:
-  allows polling progress
-
-Result API:
-  returns completed analysis only when ready
+contractResult cache:
+  Key: contractUuid
+  TTL: 30 minutes
+  Populated: ContractService.getResult() — only when COMPLETED
+  Condition: unless = "analysisStatus != 'COMPLETED'"
+  Evicted: ContractStatusService.updateStatus() on every status transition
 ```
 
-This is a good backend pattern for long-running document and AI workflows.
+Status is evicted on every transition so polling clients always see fresh progress. The result cache only populates on `COMPLETED` to avoid caching an incomplete response.
 
-## 6. Current Architecture Strengths
+---
 
-- Clear separation between controller, service, parser, AI, worker, and repository layers.
-- Async processing boundary is now separated into `ContractAnalysisWorker`.
-- Safer async design by passing IDs instead of JPA entities.
-- Duplicate detection using SHA-256 hash.
-- Domain model already anticipates contract versions, clauses, analysis, and negotiation workflows.
-- PostgreSQL is a good choice for structured metadata and JSONB-based AI results.
-- API flow is suitable for frontend polling and long-running AI jobs.
+## 6. Security Design
 
-## 7. Current Limitations
+```
+Request
+  └─▶ JwtAuthenticationFilter (OncePerRequestFilter)
+        ├─▶ Reads Authorization: Bearer <token>
+        ├─▶ Validates HMAC-SHA256 signature + expiry
+        ├─▶ Extracts subject + roles from Claims
+        └─▶ Sets UsernamePasswordAuthenticationToken in SecurityContext
 
-### Security
-
-All endpoints are currently public. Legal documents are sensitive, so authentication and authorization are required before production use.
-
-Missing:
-
-- User authentication.
-- Owner-based access control.
-- Admin/user roles.
-- Audit logs.
-- Secure document storage rules.
-
-### Structured Analysis
-
-The current result stores AI analysis as plain text in `aiSummary`.
-
-Limitations:
-
-- Clause-level analysis is not persisted.
-- `redFlags` and `greenFlags` return empty arrays.
-- `clauseAnalyses` returns an empty array.
-- Results are harder to query, compare, and visualize.
-
-### Versioning
-
-The entity model supports parent-child versions, but upload flow does not yet support revised contract uploads.
-
-Current behavior:
-
-- Same file hash: duplicate.
-- Changed file: treated as a new contract.
-
-Needed behavior:
-
-- Changed file uploaded as revision: linked to parent contract and marked as version 2, 3, etc.
-
-### Caching
-
-Redis is not fully integrated yet.
-
-Good Redis use cases:
-
-- Cache completed contract results.
-- Cache frequently-polled status responses with short TTL.
-- Cache AI prompt/result metadata if needed.
-- Later, support queue-backed background processing.
-
-### Reliability
-
-Current async processing is in-process.
-
-Limitations:
-
-- If the application crashes during analysis, in-progress work may be lost.
-- No retry policy for failed AI calls.
-- No durable job table or queue.
-
-### Database Migrations
-
-The application currently uses Hibernate `ddl-auto: update`.
-
-This is acceptable for local development but not for production-quality schema evolution.
-
-Needed:
-
-- Flyway or Liquibase migrations.
-- `ddl-auto: validate` outside local development.
-
-## 8. Completion Scope For Resume-Ready Version
-
-These items should be completed to present the project strongly as a backend engineering project.
-
-### 1. Redis Caching
-
-Add Redis for read optimization.
-
-Scope:
-
-- Add Redis dependency.
-- Add Redis service to Docker Compose.
-- Configure Spring Cache with Redis.
-- Cache completed analysis result.
-- Optionally cache status with very short TTL.
-- Evict status cache whenever status changes.
-
-Suggested cache policy:
-
-```text
-contractResult:
-  TTL: 30 minutes to 2 hours
-  cache only completed results
-
-contractStatus:
-  TTL: 5 to 15 seconds
-  useful only during polling
+SecurityConfig:
+  PUBLIC:    /actuator/health, /v3/api-docs/**, /swagger-ui/**
+  CONTRACTS: /contracts/** (permitAll for dev; replace with .authenticated() for prod)
+  DEFAULT:   .authenticated()
 ```
 
-### 2. Revised Contract Versioning
+JWT filter is active and validates tokens. Contract endpoints are `permitAll` for development convenience. Switching to authenticated requires wiring a `UserDetailsService` — the filter chain is already in place.
 
-Add optional revision support.
+---
 
-Recommended API:
+## 7. Revision / Versioning Flow
 
-```text
-POST /api/contracts/upload
-  file
-  partyName
-  partyRole
-  jurisdiction
-  parentContractUuid optional
 ```
-
-Rules:
-
-```text
-Same hash:
-  duplicate upload
-
-Different hash + parentContractUuid present:
-  revised version
-
-Different hash + no parentContractUuid:
-  new contract
-```
-
-Expected output fields:
-
-```json
-{
-  "contractUuid": "new-version-uuid",
-  "parentContractUuid": "original-contract-uuid",
-  "version": 2,
-  "isLatestVersion": true,
-  "changeSummary": "Clause 5 removed"
-}
-```
-
-### 3. Clause Extraction
-
-Add a clause extraction step after parsing.
-
-Flow:
-
-```text
-parsedText
-  -> ClauseExtractionService
-  -> List<ClauseEntity>
-  -> save clauses
-  -> AI clause analysis
-```
-
-This unlocks:
-
-- Accurate `totalClauses`.
-- Clause-level risk summaries.
-- Clause diffing between versions.
-- Better frontend display.
-
-### 4. Structured AI Output
-
-Move from free-form AI text to validated JSON.
-
-Target shape:
-
-```json
-{
-  "overallRisk": "HIGH",
-  "riskScore": 7.5,
-  "summary": "The contract is high risk...",
-  "redFlags": [],
-  "greenFlags": [],
-  "clauses": []
-}
-```
-
-Benefits:
-
-- Easier testing.
-- Easier persistence.
-- Better UI.
-- Better comparison between versions.
-
-### 5. Exception Handling
-
-Add handlers for:
-
-- Duplicate upload: `409 Conflict`
-- Contract not found: `404 Not Found`
-- Analysis not ready: `202 Accepted` or `409 Conflict`
-- Invalid upload: `400 Bad Request`
-- Unsupported file type: `415 Unsupported Media Type`
-- AI unavailable: `503 Service Unavailable`
-
-### 6. Basic Security
-
-Minimum resume-ready security:
-
-- Keep health endpoint public.
-- Protect contract APIs.
-- Store authenticated user as `uploadedBy`.
-- Ensure users can only access their own contracts.
-
-### 7. Integration Tests
-
-Add tests for:
-
-- Upload valid TXT contract.
-- Duplicate upload.
-- Unsupported file type.
-- Status flow.
-- Result before completion.
-- AI failure marks contract as failed.
-- Revised version upload.
-- Redis-cached result.
-
-## 9. Future Roadmap
-
-These are good future items but do not need to be completed immediately.
-
-### Durable Job Queue
-
-Move from in-process async to a durable queue.
-
-Options:
-
-- Redis queue
-- RabbitMQ
-- Kafka
-- Database-backed job table
-
-Recommended future design:
-
-```text
-Upload API
-  -> saves contract
-  -> creates AnalysisJob
-  -> queue publishes job
+Upload V2 (parentContractUuid = V1.uuid)
+  └─▶ ContractService
+        ├─▶ mark V1.isLatestVersion = false
+        ├─▶ persist V2 with parentContract = V1, version = 2, isLatestVersion = true
+        └─▶ trigger worker
 
 Worker
-  -> consumes job
-  -> retries on failure
-  -> updates status
+  ├─▶ load V1 clauses → Map<hash, ClauseEntity>, Map<clauseNumber, ClauseEntity>
+  ├─▶ extract V2 clauses
+  ├─▶ for each V2 clause:
+  │     same hash → UNCHANGED → clone prior analysis, save ClauseChange(UNCHANGED)
+  │     same number, different hash → MODIFIED → re-analyse, save ClauseChange(MODIFIED)
+  │     new number → ADDED → analyse fresh, save ClauseChange(ADDED)
+  └─▶ V1 clauses not matched → save ClauseChange(REMOVED)
 ```
 
-### Advanced Contract Diffing
+Only MODIFIED and ADDED clauses are sent to the LLM. This is the key cost-efficiency design.
 
-Compare revised contracts at clause level.
+---
 
-Track:
+## 8. Identified Limitations (Honest Accounting)
 
-- Added clauses.
-- Removed clauses.
-- Modified clauses.
-- Risk score improvement or regression.
-- Suggestions adopted or rejected.
+| Area | Current State | Next Step |
+|---|---|---|
+| Auth | JWT filter active, endpoints permitAll | Wire UserDetailsService, switch to .authenticated() |
+| DB migrations | `ddl-auto: update` | Replace with Flyway |
+| AI output | Free-text plain English | Move to structured JSON response |
+| redFlags / greenFlags | Computed in RiskEvaluationResult but not copied to ContractAnalysisResponse | Wire through from(contract) |
+| Job durability | In-process async — lost on JVM crash | Move to Kafka or Redis Streams job queue |
+| File storage | File bytes held in memory during analysis | Move to S3 / GCS object storage |
+| Observability | SLF4J logs only | Add Prometheus metrics, correlation IDs |
 
-### Object Storage
+---
 
-Move raw document storage out of the database/app server.
+## 9. Technology Decisions
 
-Options:
+**Why Spring AI instead of raw OpenAI HTTP client?**
+Spring AI provides a clean abstraction over model providers. Switching from OpenAI to another provider (Anthropic, Azure OpenAI, local Ollama) requires only a config change, not application code changes. It also handles retry, streaming, and structured output out of the box.
 
-- AWS S3
-- Azure Blob Storage
-- Local MinIO for development
+**Why three ChatClient beans?**
+Fast tasks (clause keyword extraction) don't need GPT-4o. `gpt-4o-mini` gives ~10x cost reduction. Deterministic tasks (structured scoring) use temperature 0.0. The bean separation enforces this at injection time so individual services can't accidentally use the wrong tier.
 
-### Audit Trail
+**Why afterCommit for async trigger?**
+Triggering `@Async` inside a `@Transactional` method means the async thread may try to load the persisted entity before the transaction commits. `TransactionSynchronization.afterCommit()` guarantees the entity is visible before the worker reads it.
 
-Track:
+**Why Redis cache with eviction on status update?**
+Status polling can be high-frequency for large contracts. Caching prevents repeated DB reads. Evicting on every status change means the cache is always consistent — there's no stale-status window where a client sees an old status.
 
-- Who uploaded contract.
-- Who viewed result.
-- When analysis was run.
-- Which model was used.
-- Prompt version.
-- Token usage and cost.
+---
 
-### Observability
+## 10. Roadmap
 
-Add:
-
-- Request correlation IDs.
-- Job IDs in logs.
-- AI latency metrics.
-- Token usage metrics.
-- Failure dashboards.
-
-### Multi-Tenant Readiness
-
-Add tenant boundaries:
-
-- Organization ID.
-- User roles.
-- Per-tenant contract isolation.
-- Per-tenant rate limits.
-
-## 10. Suggested Final Architecture
-
-```text
-Client
-  -> ContractController
-      -> ContractService
-          -> ContractRepository
-          -> PartyProfileRepository
-          -> ContractAnalysisWorker
-
-ContractAnalysisWorker
-  -> DocumentParserService
-  -> ClauseExtractionService
-  -> AIService
-  -> RiskEvaluationService
-  -> ContractStatusService
-  -> ClauseRepository
-  -> ClauseAnalysisRepository
-
-Read APIs
-  -> Redis Cache
-  -> PostgreSQL fallback
-
-PostgreSQL
-  -> contracts
-  -> party_profiles
-  -> clauses
-  -> clause_analyses
-  -> clause_changes
-  -> negotiation_tracking
-```
-
-## 11. Resume Positioning
-
-Strong resume description:
-
-```text
-Built LegalLens, an AI-assisted contract risk analysis backend using Spring Boot, PostgreSQL, Spring AI, asynchronous processing, and Redis caching. Designed upload/status/result APIs for long-running document analysis workflows, implemented document parsing for PDF/DOCX/TXT, SHA-256 duplicate detection, party-aware risk analysis, and a domain model for contract versioning, clause-level analysis, and negotiation tracking.
-```
-
-Architecture keywords to mention:
-
-- Asynchronous processing
-- Clear service boundaries
-- AI integration layer
-- Document parsing pipeline
-- Domain-driven entity model
-- PostgreSQL persistence
-- Redis caching
-- Contract versioning
-- Clause-level risk analysis
-- Secure API roadmap
-- Failure handling and observability roadmap
-
-## 12. Completion Checklist
-
-### Complete Now
-
-- Redis cache integration.
-- Cache eviction through `ContractStatusService`.
-- Revised version upload using optional `parentContractUuid`.
-- Clause extraction and persistence.
-- Structured AI JSON response.
-- Better exception handling.
-- Basic authentication and ownership checks.
-- Integration tests.
-
-### Future Enhancements
-
-- Durable queue-based workers.
-- Object storage for uploaded files.
-- Advanced semantic clause comparison.
-- Prompt versioning and AI cost tracking.
-- Audit trail.
-- Multi-tenant support.
-- Admin dashboard and metrics.
+- Flyway migrations
+- UserDetailsService + enforced JWT auth on contract endpoints
+- Structured JSON AI output with validated schema
+- Durable job queue (Kafka or Redis Streams)
+- Clause-level red/green flags wired into API response
+- AWS S3 / GCS for uploaded file storage
+- Prometheus metrics (analysis latency, LLM token usage, error rates)
+- Multi-tenant isolation (org ID on all entities)

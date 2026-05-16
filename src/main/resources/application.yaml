@@ -46,6 +46,8 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+      enabled: true
+      resolve-lazily: true
 
   ai:
     openai:
@@ -87,4 +89,3 @@ legal-lens:
     directory: ./uploads/
     max-file-size-mb: 20
     allowed-types: "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
-
